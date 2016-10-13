@@ -1,0 +1,21 @@
+﻿--
+-- How many students are enrolled in STEM-H programs and health 
+-- professional programs (seperated by gender and year)?
+--
+
+DROP FUNCTION IF EXISTS stem_enroll(year integer, degree text);
+
+CREATE FUNCTION stem_enroll(year integer, degree text)
+RETURNS TABLE(year integer, gender text, degree text, stem_enrollment integer, stem_percent integer, hpp_enrollment integer, hpp_percent integer, total_students integer) AS $$
+
+    SELECT year, gender, degree, stem_enrollment, stem_percent, hpp_enrollment, hpp_percent, total_students
+    FROM stemh_enrollment
+    WHERE gender <> 'ALL'
+      AND degree = $2
+      AND year = $1
+    ORDER BY degree, year, gender
+
+$$ LANGUAGE SQL STABLE STRICT;
+
+ALTER FUNCTION stem_enroll(year integer, degree text) OWNER TO health4va;
+

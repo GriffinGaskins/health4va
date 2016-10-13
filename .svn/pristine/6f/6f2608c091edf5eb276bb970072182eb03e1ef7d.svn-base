@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<title>Health4VA | About Us</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel="stylesheet" />
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1><a href="#">Health4VA</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="index.html" title="">Home</a></li>
+				<li><a href="highlights.html" title="">Highlights</a></li>
+				<li><a href="graphs.html" title="">Interactive Data</a></li>
+				<li><a href="aboutus.html" title="">About Us</a></li>
+				<li><a href="contactus.html" title="">Contact Us</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="featured-wrapper">
+		<div id="featured" class="container">
+			<div class="major">
+				<h2>Meet The Team</h2>
+				<span class="byline">JMU CS 474 Spring 2016</span> </div>
+			<div class="column1"> <span class="icon icon-user"></span>
+				<div class="title">
+					<h2>Annalea Roeske</h2>
+				</div>
+				<p>We could write something here about our degrees, futures in computer science, and whatever
+				else you may like, or you can leave it blank. Your call.</p>
+				<a href="#">You could Include a link to a resume or personal website</a>
+			</div>
+			<div class="column2"> <span class="icon icon-user"></span>
+				<div class="title">
+					<h2>Katie Heatherly</h2>
+				</div>
+				<p>We could write something here about our degrees, futures in computer science, and whatever
+				else you may like, or you can leave it blank. Your call.</p>
+				<a href="#">You could Include a link to a resume or personal website</a>
+			</div>
+			<div class="column3"> <span class="icon icon-user"></span>
+				<div class="title">
+					<h2>Matthew Petty</h2>
+				</div>
+				<p>We could write something here about our degrees, futures in computer science, and whatever
+				else you may like, or you can leave it blank. Your call.</p>
+				<a href="#">You could Include a link to a resume or personal website</a>
+			</div>
+			<div class="column4"> <span class="icon icon-user"></span>
+				<div class="title">
+					<h2>Griffin Gaskins</h2>
+				</div>
+				<p>We could write something here about our degrees, futures in computer science, and whatever
+				else you may like, or you can leave it blank. Your call.</p>
+				<a href="#">You could Include a link to a resume or personal website</a>
+			</div>
+		</div>
+	</div>
+	<div id="copyright" class="container">
+	<p>&copy; Health4VA | JMU | Spring 2016 | CS 474 </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+package db;
+
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * CS 474 HW5: Dynamic Charts
+ *
+ * @author WRITE YOUR NAME HERE
+ */
+public class Query {
+    
+    public int year;
+    public String degree;
+    
+    public int div_num;
+    public int sch_num;
+    public String sch_name;
+    public int sch_year;
+    public int program_num;
+
+    private int[][] data;
+    private int[][] stemData;
+
+    public Query(HttpServletRequest request) {
+
+        sch_year = parseInt(request, "sch_year");
+        program_num = parseInt(request, "program_num");
+        year = parseInt(request, "year");
+        degree = parseStr(request, "degree");
+    }
+
+    private int parseInt(HttpServletRequest request, String name) {
+        String str = request.getParameter(name);
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException exc) {
+            return 2007;
+        }
+    }
+
+    private String parseStr(HttpServletRequest request, String name) {
+        String str = request.getParameter(name);
+        if (str != null) {
+            return str;
+        } else {
+            return "ALL";
+        }
+    }
+
+   public int[][] getData() {
+        // return cached copy if exists
+        if (data != null) {
+            return data;
+        } 
+        // TODO Step 3: Execute SQL
+	// [2000,2004]
+	// "2000,2001,2002,2003,2004"
+	String years = "*";
+	if(!proj.equals("null")){
+		String years = proj;
+	}
+        String sql = "SELECT " + years + " FROM race_program(?, ?)";
+        try {
+            // set the query parameters
+            Connection db = Database.open();
+            PreparedStatement st = db.prepareStatement(sql);
+            st.setInt(1, sch_year);
+            st.setInt(2, program_num);
+            
+            ResultSet rs = st.executeQuery();
+            
+            // execute query, save results
+            data = new int[7][2];
+            
+            int i = 0;
+            
+            while(rs.next())
+            {
+                data[i][0] = Integer.parseInt(rs.getString("race"));
+                data[i][1] = rs.getInt("comp_cnt");
+                rs.next();
+                i++;
+            }
+            
+            // close database resources
+            st.close();
+            rs.close();
+            return data;
+            
+        } catch (SQLException exc) {
+            // lazy hack to simplify hw5
+            throw new RuntimeException(exc);
+        }
+    }
+public int getSchYear() {
+    // returns value for attribute sch_year
+    return sch_year;
+}
+public int[][] getDataSTEM() {
+        // return cached copy if exists
+        if (stemData != null) {
+            return stemData;
+        } 
+        String sql = "SELECT * FROM stem_enroll(?, ?)";
+        
+        try {
+            // set the query parameters
+            Connection db = Database.open();
+            PreparedStatement st = db.prepareStatement(sql);
+            ResultSet rs;
+            
+            st.setInt(1, year);
+            st.setString(2, degree);
+            // execute query, save results
+            rs = st.executeQuery();
+            stemData = new int[2][6];
+            
+            if(rs.next())
+            {
+                for(int i = 0; i<2; i++)
+                {
+                //rs.next();
+                    stemData[i][0] = rs.getInt(1);
+                
+                    for(int j = 1; j<6; j++)
+                    {
+                        stemData[i][j] = rs.getInt(j+3);
+                    }
+                    if(!rs.next())
+                    {
+                        break;
+                    }
+                }
+            }
+            
+
+            // close database resources
+            st.close();
+            rs.close();
+            db.close();
+            return stemData;
+        } catch (SQLException exc) {
+            // lazy hack to simplify hw5
+            throw new RuntimeException(exc);
+        }
+    }
+
+}

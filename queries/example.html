@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Website</title>
+</head>
+<body>
+
+<h3>Group name</h3>
+
+Health4VA
+
+<h3>Research question</h3>
+
+What educational and other factors lead students to choose and succeed in health careers?  Is Virginia successfully developing a diverse and well-rounded health workforce for the future?
+
+<h3>Initial results</h3>
+<h4>What is the trend in Virginia medical doctor graduation?</h4>
+<table border="1" cellpadding="3">
+    <tr>
+        <td colspan="3" bgcolor="lightblue">
+<pre>    SELECT grad_completion, count(*)
+    FROM dr_profiles AS dr
+    WHERE issue_year  LIKE '20%'
+     AND grad_completion IS NOT NULL
+    GROUP BY grad_completion
+    ORDER BY grad_completion
+</pre>
+        </td>
+    </tr>
+    <tr>
+        <th>Year of Graduation</th>
+        <th>Number of Recorded Graduates</th>
+        <td rowspan="12">
+            <div id="chart1" style="width: 600px; height: 400px;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>2000</td>
+        <td>617</td>
+    </tr>
+    <tr>
+        <td>2001</td>
+        <td>634</td>
+    </tr>
+    <tr>
+        <td>2002</td>
+        <td>614</td>
+    </tr>
+    <tr>
+        <td>2003</td>
+        <td>558</td>
+    </tr>
+    <tr>
+        <td>2004</td>
+        <td>607</td>
+    </tr>
+    <tr>
+        <td>2005</td>
+        <td>525</td>
+    </tr>
+    <tr>
+        <td>2006</td>
+        <td>546</td>
+    </tr>
+    <tr>
+        <td>2007</td>
+        <td>542</td>
+    </tr>
+    <tr>
+        <td>2008</td>
+        <td>459</td>
+    </tr>
+    <tr>
+        <td>2009</td>
+        <td>451</td>
+    </tr>
+    <tr>
+        <td>2010</td>
+        <td>381</td>
+    </tr>
+    <tr>
+        <td>2011</td>
+        <td>297</td>
+    </tr>
+    <tr>
+        <td>2012</td>
+        <td>210</td>
+    </tr>
+    <tr>
+        <td>2013</td>
+        <td>103</td>
+    </tr>
+    <tr>
+        <td>2014</td>
+        <td>49</td>
+    </tr>
+    <tr>
+        <td>2015</td>
+        <td>7</td>
+    </tr>
+
+</table>
+<br>
+<h4>How many students who are economically disadvantaged in this dataset completed health-related cte programs in 2008?</h4>
+<table border="1" cellpadding="3">
+ <tr>
+     <td rowspan="12">
+            <div id="chart2" style="width: 400px; height: 300px;"></div>
+        </td>
+        <th>Division Name</th>
+        <th>School Name</th>
+        <th>Number of Graduates</th>
+    </tr>
+    <tr>
+        <td>Alexandria City</td>
+        <td>T.C. Williams High</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Buckingham County</td>
+        <td>Buckingham County High</td>
+        <td>15</td>
+    </tr>
+    <tr>
+        <td>Franklin City</td>
+        <td>Franklin High</td>
+        <td>12</td>
+    </tr>
+    <tr>
+        <td>Halifax County</td>
+        <td>Halifax County High</td>
+        <td>11</td>
+    </tr>
+    <tr>
+        <td>Mecklenburg County</td>
+        <td>Bluestone  High</td>
+        <td>22</td>
+    </tr>
+    <tr>
+        <td colspan="3" bgcolor="lightgreen">
+<pre>    SELECT DISTINCT sch_year, div_name, sch_name, program_name, comp_cnt
+    FROM cte_completer AS cte
+      NATURAL JOIN program AS p
+      NATURAL JOIN division AS d
+      NATURAL JOIN school AS s
+    WHERE sch_num != 0
+      AND div_num != 0
+      AND race = 'ALL'
+      AND gender = 'ALL'
+      AND disabil = 'ALL'
+      AND lep = 'ALL'
+      AND disadva = 'Y'
+      AND p.program_num > 3000
+      AND p.program_num < 4000
+      AND sch_year = 2008
+    ORDER BY sch_year, div_name, sch_name, program_name, comp_cnt
+</pre>
+        </td>
+    </tr>
+</table>
+
+<br>
+<h4>How many female students in this dataset complete health-related cte programs in 2012?</h4>
+<table border="1" cellpadding="3">
+    <tr>
+        <td colspan="3" bgcolor="hotpink">
+  <pre>  SELECT DISTINCT sch_year AS year, program_name AS program, div_name AS division, sch_name AS school, gender, comp_cnt
+  FROM cte_completer AS cte
+    NATURAL JOIN program AS p 
+    NATURAL JOIN division AS d
+    NATURAL JOIN school AS s
+  WHERE sch_num != 0
+    AND div_num != 0
+    AND race = 'ALL'
+    AND gender = 'F'
+    AND disabil = 'ALL'
+    AND lep = 'ALL'
+    AND disadva = 'ALL'
+    AND p.program_num > 3000
+    AND p.program_num < 4000
+    AND sch_year = 2012
+  ORDER BY sch_year, program_name, div_name, sch_name, gender, comp_cnt
+</pre>
+        </td>
+    </tr>
+</table>
+      <div id="chart3" style="width: 900px; height: 400px;"></div>
+
+<br>
+<h4>How many students of each race in this dataset complete health-related cte programs in 2008?</h4>
+<table border="1">
+    <tr>
+        <td colspan="3" bgcolor="beige">
+<pre>    SELECT DISTINCT sch_year, div_name, sch_name, race, program_name, comp_cnt
+  FROM cte_completer AS cte
+    NATURAL JOIN program AS p 
+    NATURAL JOIN division AS d
+    NATURAL JOIN school AS s
+  WHERE sch_num != 0
+    AND div_num != 0
+    AND race <> 'ALL'
+    AND gender = 'ALL'
+    AND disabil = 'ALL'
+    AND lep = 'ALL'
+    AND disadva = 'ALL'
+    AND p.program_num > 3000
+    AND p.program_num < 4000
+    AND sch_year = 2008
+  ORDER BY sch_year, div_name, sch_name, race, program_name, comp_cnt
+  LIMIT 500;
+</pre>
+        </td>
+    </tr>
+    <tr>
+        <th>Year</th>
+        <th>Division</th>
+	<th>School</th>
+	<th>Race</th>
+	<th>Program</th>
+	<th>Number Completed</th>
+        <td rowspan="100">
+            <div id="chart4" style="width: 600px; height: 400px;"></div>
+        </td>
+    </tr>
+   <tr>
+  	<td>2008</td>
+	<td>Amherst County</td>
+	<td>Amherst County High</td>
+	<td>5</td>
+	<td>Emergency Medical Technology</td>
+	<td>12</td>
+   </tr>
+   <tr> 
+	<td>2008</td>
+	<td>Appomattox County</td>
+	<td>Appomattox County High</td>
+	<td>5</td>
+	<td>Nursing Aide</td>
+	<td>21 </td></tr>
+   <tr> 
+	<td>2008</td>
+	<td>Arlington County</td>
+	<td>Yorktown High</td>
+	<td>5</td>
+	<td>Emergency Medical Technology</td>
+	<td>13</td>
+   </tr>
+   <tr> 
+	<td>2008</td>
+	<td>Arlington County</td>
+	<td>Yorktown High</td>
+	<td>5</td>
+	<td>Physical Therapy</td>
+	<td>15</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Carroll County</td>
+	<td>Carroll County High</td>
+	<td>5</td>
+	<td>Practical Nursing</td>
+	<td>13</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Clarke County</td>
+	<td>Clarke County High</td>
+	<td>5</td>
+	<td>Nursing Aide</td>
+	<td>16</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Culpeper County</td>
+	<td>Culpeper County High</td>
+	<td>5</td>
+	<td>Veterinary Assistant</td>
+	<td>18</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Cumberland County</td>
+	<td>Cumberland High</td>
+	<td>3</td>
+	<td>Nursing Aide</td>
+	<td>14</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Danville City</td>
+	<td>George Washington High</td>
+	<td>3</td>
+	<td>Dental Assistant</td>
+	<td>13</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Fairfax County</td>
+	<td>Chantilly High</td>
+	<td>5</td>
+	<td>Veterinary Assistant</td>
+	<td>12</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Franklin City</td>
+	<td>Franklin High</td>
+	<td>3</td>
+	<td>Nursing Aide</td>
+	<td>19</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Franklin County</td>
+	<td>Franklin County High</td>
+	<td>5</td>
+	<td>Health Career Cluster</td>
+	<td>15</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Franklin County</td>
+	<td>Franklin County High</td>
+	<td>5</td>
+	<td>Sports Medicine</td>
+	<td>12</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Greensville County</td>
+	<td>Greensville County High</td>
+	<td>3</td>
+	<td>Health Career Cluster</td>
+	<td>11</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Halifax County</td>
+	<td>Halifax County High</td>
+	<td>5</td>
+	<td>Pharmacy Technician</td>
+	<td>12</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Henrico County</td>
+	<td>Highland Springs High</td>
+	<td>3</td>
+	<td>Pharmacy Technician</td>
+	<td>11</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Martinsville City</td>
+	<td>Martinsville High</td>
+	<td>3</td>
+	<td>Nursing Aide</td>
+	<td>12</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Mecklenburg County</td>
+	<td>Bluestone High</td>
+	<td>3</td>
+	<td>Nursing Aide</td>
+	<td>18</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Mecklenburg County</td>
+	<td>Park View High</td>
+	<td>3</td>
+	<td>Nursing Aide</td>
+	<td>17</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Orange County</td>
+	<td>Orange County High</td>
+	<td>5</td>
+	<td>Sports Medicine</td>
+	<td>17</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Patrick County</td>
+	<td>Patrick County High</td>
+	<td>5</td>
+	<td>Health Career Cluster</td>
+	<td>12</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Portsmouth City</td>
+	<td>Churchland High</td>
+	<td>3</td>
+	<td>Health Career Cluster</td>
+	<td>12</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Powhatan County</td>
+	<td>Powhatan High</td>
+	<td>5</td>
+	<td>Nursing Aide</td>
+	<td>15</td>
+   </tr>
+   <tr>
+	<td>2008</td>
+	<td>Pulaski County</td>
+	<td>Pulaski County Senior High</td>
+	<td>5</td>
+	<td>Nursing Aide</td>
+	<td>14</td>
+   </tr>
+
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart', 'table']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+     ['Year',''],
+     [2000 , 617],
+     [2001 , 634],
+     [2002 , 614],
+     [2003 , 558],
+     [2004 , 607],
+     [2005 , 525],
+     [2006 , 546],
+     [2007 , 542],
+     [2008 , 459],
+     [2009 , 451],
+     [2010 , 381],
+     [2011 , 297],
+     [2012 , 210],
+     [2013 , 103],
+     [2014 , 49],
+     [2015 , 7]]);
+
+    var data2 = google.visualization.arrayToDataTable([
+      ['School Name', ''],
+      ['T.C. Williams High', 12],
+      ['Buckingham County High', 15],
+      ['Franklin High',12],
+      ['Halifax County High',11],
+      ['Bluestone High',22]
+      ]);
+
+    var data3 = google.visualization.arrayToDataTable([
+      ['Year', 'Position', 'City/County', 'High School', 'Gender', 'Number of Graduates'],
+      [2012,'Dental Assistant','Danville City','George Washington High','F',13],
+      [2012,'Dental Assistant','Fairfax County','West Potomac High','F',11],
+      [2012,'Emergency Medical Technology','Stafford County','Colonial Forge High','F',14],
+      [2012,'Health Career Cluster','Buckingham County','Buckingham County High','F',18],
+      [2012,'Health Career Cluster','Chesterfield County','Thomas Dale High','F',14],
+      [2012,'Health Career Cluster','Franklin County','Franklin County High','F',28],
+      [2012,'Health Career Cluster','Greensville County','Greensville County High','F',17],
+      [2012,'Health Career Cluster','Martinsville City','Martinsville High','F',14],
+      [2012,'Health Career Cluster','Montgomery County','Blacksburg High','F',16],
+      [2012,'Health Career Cluster','Montgomery County','Christiansburg High','F',11],
+      [2012,'Health Career Cluster','Portsmouth City','Woodrow Wilson High','F',15],
+      [2012,'Health Career Cluster','Roanoke City','Patrick Henry High','F',15],
+      [2012,'Health Career Cluster','Stafford County','Brooke Point High','F',19],
+      [2012,'Medical Assistant','Fairfax County','Chantilly High','F',17],
+      [2012,'Medical Assistant','Fairfax County','West Potomac High','F',11],
+      [2012,'Nursing Aide','Accomack County','Nandua High','F',11],
+      [2012,'Nursing Aide','Alleghany County','Alleghany High','F',16],
+      [2012,'Nursing Aide','Appomattox County','Appomattox County High','F',12],
+      [2012,'Nursing Aide','Clarke County','Clarke County High','F',17],
+      [2012,'Nursing Aide','Danville City','George Washington High','F',14],
+      [2012,'Nursing Aide','Fauquier County','Liberty High','F',12],
+      [2012,'Nursing Aide','Floyd County','Floyd County High','F',16],
+      [2012,'Nursing Aide','Franklin County','Franklin County High','F',19],
+      [2012,'Nursing Aide','Frederick County','James Wood High','F',14],
+      [2012,'Nursing Aide','Greene County','William Monroe High','F',11],
+      [2012,'Nursing Aide','Halifax County','Halifax County High','F',17],
+      [2012,'Nursing Aide','Henrico County','Highland Springs High','F',12],
+      [2012,'Nursing Aide','Hopewell City','Hopewell High','F',17],
+      [2012,'Nursing Aide','Louisa County','Louisa County High','F',27],
+      [2012,'Nursing Aide','Madison County','Madison County High','F',15],
+      [2012,'Nursing Aide','Mathews County','Mathews High','F',18],
+      [2012,'Nursing Aide','Nelson County','Nelson County High','F',17],
+      [2012,'Nursing Aide','Orange County','Orange County High','F',12],
+      [2012,'Nursing Aide','Powhatan County','Powhatan High','F',14],
+      [2012,'Nursing Aide','Prince Edward County','Prince Edward County High','F',14],
+      [2012,'Nursing Aide','Warren County','Warren County High','F',12],
+      [2012,'Pharmacy Technician','Fairfax County','Centreville High','F',11],
+      [2012,'Pharmacy Technician','Fairfax County','Falls Church High','F',12],
+      [2012,'Pharmacy Technician','Fairfax County','West Potomac High','F',13],
+      [2012,'Pharmacy Technician','Norfolk City','Matthew Fontaine Maury High','F',15]
+      ]);
+
+    var data4 = google.visualization.arrayToDataTable([
+      ['Race', 'Total Graduates'],
+      ['African-American', 127],
+      ['White', 217],
+      ['Other', 0]
+      ]);
+
+    var options = {
+      title: 'Yearly Medical Doctor Graduation Trends',
+      curveType: 'function',
+      vAxis: {title: "Number of Graduates", format: '0'},
+      hAxis: {title: "Year", maxValue: 2016, format: '0'}
+    };
+
+    var options2 = {
+      title: 'Number of disadvantaged students completeing CTE-H programs in 2008',
+      vAxis: {title: '2008', format: '0'},
+      hAxis: {title: 'Number of Graduates'},
+    };
+
+    var options3 = {
+      title: 'How many female students in this dataset complete health-related cte programs?',
+      width: '100%', 
+      height: '100%'
+    };
+
+    var options4 = {
+      title: 'Race distribution of CTE-H graduates in 2008'
+      };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart1'));
+    chart.draw(data, options);
+
+    var chart2 = new google.visualization.BarChart(document.getElementById('chart2'));
+    chart2.draw(data2, options2);
+
+    var chart3 = new google.visualization.Table(document.getElementById('chart3'));
+    chart3.draw(data3, options3);
+
+    var chart4 = new google.visualization.PieChart(document.getElementById('chart4'));
+    chart4.draw(data4,options4);
+
+
+  }
+</script>
+
+</body>
+</html>

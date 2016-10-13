@@ -1,0 +1,239 @@
+DROP TABLE IF EXISTS division;
+
+CREATE TABLE division (
+    div_num integer NOT NULL,
+    div_name text NOT NULL
+);
+
+ALTER TABLE division OWNER TO health4va;
+
+COMMENT ON TABLE division IS 'all divisions in Virginia';
+
+
+DROP TABLE IF EXISTS school;
+
+CREATE TABLE school (
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    sch_name text NOT NULL
+);
+
+ALTER TABLE school OWNER TO health4va;
+
+COMMENT ON TABLE school IS 'all schools in Virginia';
+
+
+DROP TABLE IF EXISTS fall_membership;
+
+CREATE TABLE fall_membership (
+    sch_year integer NOT NULL,
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    grade_num integer NOT NULL,
+    race text NOT NULL,
+    gender text NOT NULL,
+    disabil text NOT NULL,
+    lep text NOT NULL,
+    disadva text NOT NULL,
+    fall_cnt integer NOT NULL
+);
+
+ALTER TABLE fall_membership OWNER TO health4va;
+
+COMMENT ON TABLE fall_membership IS 'fall membership counts';
+
+
+DROP TABLE IF EXISTS dec_child_count;
+
+CREATE TABLE dec_child_count (
+    sch_year integer NOT NULL,
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    grade_num integer NOT NULL,
+    race text NOT NULL,
+    gender text NOT NULL,
+    disabil text NOT NULL,
+    lep text NOT NULL,
+    disadva text NOT NULL,
+    disabil_type text NOT NULL,
+    dec1_cnt integer NOT NULL
+);
+
+ALTER TABLE dec_child_count OWNER TO health4va;
+
+COMMENT ON TABLE dec_child_count IS 'disabled child counts';
+
+DROP TABLE IF EXISTS cte_completer;
+
+CREATE TABLE cte_completer (
+    sch_year integer NOT NULL,
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    race text NOT NULL,
+    gender text NOT NULL,
+    disabil text NOT NULL,
+    lep text NOT NULL,
+    disadva text NOT NULL,
+    program_num integer NOT NULL,
+    comp_cnt integer NOT NULL
+);
+
+ALTER TABLE cte_completer OWNER TO health4va;
+
+COMMENT ON TABLE cte_completer IS 'CTE program completion';
+
+DROP TABLE IF EXISTS hs_graduate;
+
+CREATE TABLE hs_graduate (
+    sch_year integer NOT NULL,
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    race text NOT NULL,
+    gender text NOT NULL,
+    disabil text NOT NULL,
+    lep text NOT NULL,
+    disadva text NOT NULL,
+    diploma_num integer NOT NULL,
+    graduate_cnt integer NOT NULL
+);
+
+ALTER TABLE hs_graduate OWNER TO health4va;
+
+COMMENT ON TABLE hs_graduate IS 'graduation numbers for hs';
+
+DROP TABLE IF EXISTS ontime_cohort;
+
+CREATE TABLE ontime_cohort (
+    sch_year integer NOT NULL,
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    race text NOT NULL,
+    gender text NOT NULL,
+    disabil text NOT NULL,
+    lep text NOT NULL,
+    disadva text NOT NULL,
+    cohort_cnt integer NOT NULL,
+    diploma_rate real NOT NULL,
+    dropout_rate real NOT NULL
+);
+
+ALTER TABLE ontime_cohort OWNER TO health4va;
+
+COMMENT ON TABLE ontime_cohort IS 'ontime graduation rates for hs';
+
+DROP TABLE IF EXISTS postsec_enroll;
+
+CREATE TABLE postsec_enroll (
+    sch_year integer NOT NULL,
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    race text NOT NULL,
+    gender text NOT NULL,
+    disabil text NOT NULL,
+    lep text NOT NULL,
+    disadva text NOT NULL,
+    enroll_graduate_cnt integer NOT NULL,
+    ps_institution_type integer NOT NULL,
+    ps_enrollment_cnt integer NOT NULL
+);
+
+ALTER TABLE postsec_enroll OWNER TO health4va;
+
+COMMENT ON TABLE postsec_enroll IS 'postsecondary enroll/grad rates';
+
+DROP TABLE IF EXISTS postsec_achieve;
+
+CREATE TABLE postsec_achieve (
+    sch_year integer NOT NULL,
+    div_num integer NOT NULL,
+    sch_num integer NOT NULL,
+    race text NOT NULL,
+    gender text NOT NULL,
+    disabil text NOT NULL,
+    lep text NOT NULL,
+    disadva text NOT NULL,
+    achieve_graduate_cnt integer NOT NULL,
+    ps_credit_de_cnt integer NOT NULL,
+    ps_unkn_de_cnt integer NOT NULL,
+    ps_credit_wo_de_cnt integer NOT NULL,
+    ps_unkn_wo_de_cnt integer NOT NULL
+);
+
+ALTER TABLE postsec_achieve OWNER TO health4va;
+
+COMMENT ON TABLE postsec_achieve IS 'postsecondary achievement';
+
+DROP TABLE IF EXISTS cte_full_enrollment;
+
+CREATE TABLE cte_full_enrollment (
+	year integer NOT NULL,
+	students_enrolled integer NOT NULL,
+	students_completed integer NOT NULL
+);
+
+COMMENT ON TABLE cte_full_enrollment IS 'cte full enrollment in virginia schools';
+
+ALTER TABLE cte_full_enrollment OWNER TO health4va;
+
+DROP TABLE IF EXISTS program;
+
+CREATE TABLE program (
+	program_num integer NOT NULL,
+        program_name text NOT NULL 
+);
+
+COMMENT ON TABLE program IS  'Names and nums for cte programs';
+
+ALTER TABLE program OWNER TO health4va;
+
+DROP TABLE IF EXISTS stemh_enrollment;
+
+CREATE TABLE stemh_enrollment (
+    year integer NOT NULL,
+    gender text NOT NULL,
+    degree text NOT NULL,
+    stemh_enrollment integer,
+    stemh_percent decimal,
+    stem_enrollment integer,
+    stem_percent integer,
+    hpp_enrollment integer,
+    hpp_percent integer,
+    other_enrollment integer NOT NULL,
+    other_percent integer,
+    total_students integer
+);
+
+COMMENT ON TABLE stemh_enrollment IS 'enrollment trends in STEM-H programs by gender';
+
+ALTER TABLE stemh_enrollment OWNER TO health4va;
+
+DROP TABLE IF EXISTS dr_profiles;
+
+CREATE TABLE dr_profiles (
+    last_name text NOT NULL,
+    first_name text NOT NULL,
+    middle_name text,
+    suffix text,
+    issue_year text,
+    city text,
+    grad_completion integer
+);
+
+COMMENT ON TABLE dr_profiles IS 'profile data on all virginia doctors post 2000';
+
+ALTER TABLE dr_profiles OWNER TO health4va;
+
+--DROP TABLE IF EXISTS post_graduate;
+
+--CREATE TABLE post_graduate (
+  --  specialty text,
+    --program text,
+    --city text,
+    --country text,
+    --state text,
+    --year_completed integer
+--);
+
+--COMMENT ON TABLE post_graduate IS 'post_graduate info on VA doctors';
+
+--ALTER TABLE post_graduate OWNER TO health4va;

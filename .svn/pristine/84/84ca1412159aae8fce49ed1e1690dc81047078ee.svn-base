@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<title>Health4VA | Highlights</title>
+<head>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel="stylesheet" />
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1><a href="#">Health4VA</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="index.html" title="">Home</a></li>
+				<li><a href="highlights.html" title="">Highlights</a></li>
+				<li><a href="graphs.jsp" title="">Interactive Data</a></li>
+				<li><a href="aboutus.html" title="">About Us</a></li>
+				<li><a href="contactus.html" title="">Contact Us</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="wrapper">
+	<div id="page" class="container">
+		<div id="content">
+			<div class="title">
+				<h2>Without A Struggle, There Can Be No Progress</h2>
+				<span class="byline">By: Health4VA</span> </div>
+			<p> Recently, we had the pleasure of working with Brooke Bell, Director of Consulting Services at<a href="http://www.cit.org/"> Center for Innovative Technology (CIT)</a>. We would like to start by saying thank you to Ms. Bell and CIT for their invaluable insight and aid in making this project successful.</p>
+			<p>
+			From our discussion with Brooke Bell, we learned some things that we should add to our project to make the topic more focused and easier to understand. She suggested we add charts to show the industry racial makeup of the CTE programs we are looking at. She said that since Virginia is putting so much money into these programs, it would be interesting to see if these areas are getting those children that went through the program to stay in that area or if they are leaving.
+			</p>
+
+			<p>For our final presentation, we could add pie charts or tables showing the number of people that work in the industries that we show for the CTE programs and the racial makeup of those careers. We do not yet know if the data is available for these programs though. We will also add a pie chart of the racial data for the entire division. This data can be found in the fall membership table and can easily be added.</p>
+
+			<p>We would again like to thank Ms. Bell for her time and help with this research.</p>
+			
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ToNEVERdo change this -->
+<br><br><br><br><br><br>
+
+<div id="wrapper" float:center>
+	<div id="page" class="container" >
+		<div id="content">
+			<div class="title">
+				<h2>Graduation Rates of Virginia Doctors</h2>
+				<span class="byline">By: Griffin Gaskins</span> </div>
+			<p>Has Virginia stopped graduating doctors, or has the state simply stopped keeping track?
+			   Well, lets check the sources to start. <a href="http://data.virginia.gov/hhr">Virginia Health and Human Resources Data</a> hosts information about the graduation rates of doctors. The last report which was released in January 2016 suggests that an issue may exist with Virginia's record keeping.
+
+			</p>
+			<p> The doctors graduation rates are<a href="http://www.dhp.virginia.gov/downloads/profiledata.asp"> found here</a>; when the data is scrubbed, unfilled information or incorrectly filled rows removed, it begins to tell an interesting story. We selected the last 16 years (2000-2016) and found a decreasing trend in the graduation of doctors.  Starting around the early 2000s reported graudation of doctors topped out at approximately 630 doctors graduating from the state per year.</p>
+
+			<div id="chart1" style="width: 600px; height: 400px;"></div>
+
+			<p>After only a few years, we begin to see a steep decline in the reported graduation of doctors in Virginia.
+			By 2010 the graduation rates are nearly half those of a decade ago. Currently, in the last full year (2015) we reported a full <strong>seven</strong> graduated doctors!</p>
+
+			<p>What could be happening here? Did Virginia really only graduate seven doctors in 2015? Well, no, almost certainly not. Virginia graduates many doctors every year. I alone know three people who either are in medical school or will be within one year. There could be many reasons why Virginia is not keeping track of this information. Could it be that they have switched there record keeping in the last few years, and this steep decline is just a result of no longer recording this information in the same place?</p>			
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart', 'table']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+     ['Year',''],
+     [2000 , 617],
+     [2001 , 634],
+     [2002 , 614],
+     [2003 , 558],
+     [2004 , 607],
+     [2005 , 525],
+     [2006 , 546],
+     [2007 , 542],
+     [2008 , 459],
+     [2009 , 451],
+     [2010 , 381],
+     [2011 , 297],
+     [2012 , 210],
+     [2013 , 103],
+     [2014 , 49],
+     [2015 , 7]]);
+
+    var options = {
+    	title: 'Yearly Medical Doctor Graduation Trends',
+    	curveType: 'function',
+    	vAxis: {title: "Number of Graduates", format: '0'},
+    	hAxis: {title: "Year", maxValue: 2016, format: '0'}
+    };
+
+    var formatter = new google.visualization.NumberFormat({negativeColor: 'red', negativeParens: true, pattern: '#######'});
+    formatter.format(data, 0);
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart1'));
+    chart.draw(data, options);
+
+  }
+</script>
+<div id="copyright" class="container">
+	<p>&copy; Health4VA | JMU | Spring 2016 | CS 474 </p>
+</div>
+</body>
+</html>

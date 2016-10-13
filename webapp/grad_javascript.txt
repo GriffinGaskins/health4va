@@ -1,0 +1,85 @@
+Script for getting health professional grad numbers per type of degree, need to
+integrate this again by calling the commented out parameters in Query.java and
+writing statements for the variable assignment.
+
+<form>
+            <%
+                String str_year = request.getParameter("year");
+            %>
+            Year:
+            <select name="year" id="year">
+              <option value=2000>2000</option>
+              <option value=2001>2001</option>
+              <option value=2002>2002</option>
+              <option value=2003>2003</option>
+              <option value=2004>2004</option>
+              <option value=2005>2005</option>
+              <option value=2006>2006</option>
+              <option value=2007>2007</option>
+              <option value=2008>2008</option>
+              <option value=2009>2009</option>
+              <option value=2010>2010</option>
+              <option value=2011>2011</option>
+              <option value=2012>2012</option>
+              <option value=2013>2013</option>
+              <option value=2014>2014</option>
+              <option value=2015>2015</option>
+            </select>
+
+            <%
+                String str_degree = request.getParameter("degree");
+            %>
+            Degree:
+            <select name="degree" id="degree">
+              <option value="Bachelor">Bachelor</option>
+              <option value="Master">Master</option>
+              <option value ="Doctor">Doctor</option>
+            </select>
+
+            <br><br>
+            <input type="submit">
+            <br>
+</form>
+<script type="text/javascript">
+           google.charts.load('current', {'packages':['table', 'corechart']});
+           google.charts.setOnLoadCallback(drawTable);
+
+           function drawTable() {
+               var data = new google.visualization.DataTable();
+               data.addColumn('string', 'Gender');
+               data.addColumn('number', 'Year');
+               data.addColumn('number', 'Stem Enrollment');
+               data.addColumn('number', 'Stem Percent');
+               data.addColumn('number', 'Health Professional Programs Enrollment');
+               data.addColumn('number', 'Health Professional Programs Percent');
+               data.addColumn('number', 'Total');
+           <%
+               int[][] table_chart = query.getDataSTEM();
+
+               out.print("data.addRows([");
+               out.println();
+               for(int i=0; i<2;i++)
+               {
+                   out.print("[");
+                   if(i==0)
+                       out.print("\"Female\",");
+                   else
+                       out.print("\"Male\",");
+                   for(int j=0;j<6;j++)
+                   {
+                       out.print(table_chart[i][j]);
+                       if(j != 5)
+                           out.print(",");
+                   }
+                   out.print("],");
+               }
+               out.print("]);");
+           %>
+
+           var table = new google.visualization.Table(document.getElementById('table_div'));
+
+           table.draw(data, {showRowNumber: false, width: '100%', height: '100%'});
+           }
+           // This is the code for the pie chart, it was breaking things.
+
+          </script>

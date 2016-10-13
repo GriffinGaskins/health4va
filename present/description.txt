@@ -1,0 +1,1 @@
+Our project analyzes STEM and CTE data to show the diversity in the programs for race. The data is broken into year, CTE program, and race.

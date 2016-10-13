@@ -1,0 +1,126 @@
+<%@page import="java.util.*, db.*" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SOL Test Scores</title>
+        <link href="index.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    </head>
+    <body>
+        <h1>Query</h1>
+        <!-- TODO Step 2: HTML Form -->
+        <form>
+          Race:
+          <select name="race" id="race">
+            <option value="ALL">ALL</option>
+            <option value="1">American Indian/Alaskan Native</option>
+            <option value="2">Asian</option>
+            <option value="3">Black or African/American</option>
+            <option value="4">Hispanic of any race</option>
+            <option value="5">White</option>
+            <option value="6">Native Hawaiian/Other Pacific Islander</option>
+            <option value="99">Two or more races, non-Hispanic</option>
+          </select>
+          <input type="submit" value="Submit">
+        </form>
+
+        <%
+            Query query = new Query(request);
+        %>
+        <script>
+            document.getElementById("div_num").value = "<%= query.div_num %>";
+            document.getElementById("sch_num").value = "<%= query.sch_num %>";
+            document.getElementById("race").value = "<%= query.race %>";
+            document.getElementById("gender").value = "<%= query.gender %>";
+            document.getElementById("disabil").value = "<%= query.disabil %>";
+            document.getElementById("lep").value = "<%= query.lep %>";
+            document.getElementById("disadva").value = "<%= query.disadva %>";
+        </script>
+
+        <h1>Results</h1>
+        <table style="text-align: center">
+            <thead>
+                <tr bgcolor="lightyellow">
+                    <th>sch_year</th>
+                    <th>ENGR</th>
+                    <th>ENGW</th>
+                    <th>HIST</th>
+                    <th>MATH</th>
+                    <th>SCI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- TODO Step 4: HTML Table -->
+            <% int[][] data = new int[9][6];
+               data = query.getData();
+            
+               for(int i = 0; i < data.length; i++)
+               {
+               %><tr ><%
+                   for(int j = 0; j < data[i].length; j++)
+                   {
+                       if(i % 2 == 0)
+                       {
+                          %><td class="even"><%
+                       }
+                       else
+                       {
+                          %><td class="odd"><%
+                       }
+                        out.print(data[i][j]); %></td>
+                   <% 
+                   }
+                   %></tr><%
+               }
+               %>
+
+            </tbody>
+        </table>
+
+        <h1>Chart</h1>
+        <div id="chart_div" style="width: 700px; height: 350px;"></div>
+
+        <script type="text/javascript">
+            google.charts.load('current', {packages: ['corechart', 'line']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                
+                data.addRows([
+                    // TODO Step 5: JavaScript Data
+                    <%
+                    int [][] info = new int[7][2];
+                    info = query.getData();
+                    for (int i = 0; i < 7; i++)
+                    {
+                        out.print("['" + info[i][0] + "',");
+                        for(int j = 0; j < 1; j++)
+                        {
+                            out.print(info[i][j] + ",");
+                        }
+                        out.print(info[i][1] + "]");
+                        if(i != 6)
+                        {
+                            out.print(",");   
+                        } 
+                    }
+                    %>
+
+                ]);
+
+                var options = {
+                    hAxis: {
+                        title: 'Year'
+                    },
+                    vAxis: {
+                        title: 'Score'
+                    },
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
+        </script>
+    </body>
+</html>
